@@ -1,0 +1,86 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# Vigenere encryption function
+
+def vigenere_enc(keyword, plaintext):   
+
+# keyword is a string of arbitrary length    
+# plaintext is the plaintext string of arbitrary length    
+# Both strings will be from {a,b,...,z}    
+# encryption of given plaintext will be performed using the given keyword   
+# according to the Vigenere cipher. You need to repeat the keyword enough times if needed to make it the same length as plaintext   
+# c - the resulting ciphertext    
+#c = ...    
+
+   if(plaintext == plaintext.upper()):   
+      plaintext = plaintext     
+   else:        
+      plaintext = plaintext.upper()
+       
+   if(keyword == keyword.upper()):     
+      keyword = keyword     
+   else:         
+      keyword = keyword.upper()    
+      keyword = list(keyword)    
+      
+   if (len(plaintext) == len(keyword)):      
+      keyword = keyword   
+   else:         
+      for k in range(len(plaintext) - len(keyword)):            
+         keyword.append(keyword[k % len(keyword)])   
+         
+   plaintext = plaintext.replace(' ','')    
+   c = []
+   
+   for i in range(len(plaintext)):         
+      x = (ord(plaintext[i]) + ord(keyword[i])) % 26       
+      x += ord('A')
+      c.append(chr(x))    
+      c = "".join(c)    
+      c = c.lower()    
+   return c
+      
+# Vigenere decryption function
+def vigenere_dec(keyword, ciphertext):   
+
+# keyword is a string of arbitrary length    
+# ciphertext is the ciphertext string of arbitrary length    
+# Both strings will be from {a,b,...,z}   
+# perform the decryption of given ciphertext using the given keyword    
+# according to the Vigenere cipher. You need to repeat the keyword    
+# enough times if needed to make it the same length as ciphertext    
+# p will be the resulting plaintext   
+# p = ...   
+
+keyword = list(keyword)    
+
+if (len(ciphertext) == len(keyword)):       
+   keyword = keyword    else:         
+   for k in range(len(ciphertext) - len(keyword)):            
+      keyword.append(keyword[k % len(keyword)])    
+      p = []    
+      for i in range(len(ciphertext)):         
+         x = (ord(ciphertext[i]) - ord(keyword[i]) + 26) % 26       
+         x += ord('A')         
+         p.append(chr(x))    
+         p = "" . join(p)    
+         p = p.lower()    
+return p
+  
+ if __name__ == "__main__":    
+ 
+   plaintext = 'Hello World'    
+   keyword = 'test'    
+   
+   #if user input is required then: 
+   # plaintext = str(sys.argv[5])
+   # keyword = str(sys.argv[2])
+   
+   
+   ciphertext = vigenere_enc(keyword, plaintext)    
+   print(ciphertext)    
+   original = vigenere_dec(keyword, ciphertext)    
+   print(original)
+   
+   
